@@ -2,6 +2,9 @@
 
 This is a standalone demo showing how to set up Playwright tests with Bazel using `rules_javascript`. This demo is extracted from the internal redo/ workspace and modified to work as a standalone project.
 
+## Error that we get when running the test
+Error: test file "simple.spec.js" should not import test file "google.spec.js"
+
 ## Key Features
 
 - **Working Example**: Tested and functional Playwright + Bazel setup
