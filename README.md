@@ -49,21 +49,25 @@ bazel test //:e2e_test --test_output=all --test_env=CI=false
 ## Configuration Details
 
 ### WORKSPACE.bazel
-- Uses public `rules_javascript` repository from GitHub
+
+- Uses `@better_rules_javascript` repository
 - Configured with Node.js version 20.15.1
 - Includes minimal dependencies needed for Playwright
 
 ### BUILD.bazel
-- Uses `playwright_test` rule from `@rules_javascript//playwright:rules.bzl`
+
+- Uses `playwright_test` rule from `@better_rules_javascript//playwright:rules.bzl`
 - Compiles TypeScript tests using `ts_library`
 - Properly configured dependencies for Playwright and Node.js types
 
 ### TypeScript Configuration
+
 - Configured for CommonJS module system (required by current Bazel setup)
 - Includes proper type definitions for Node.js and Playwright
 - Source maps enabled for debugging
 
 ### Playwright Configuration
+
 - Configured to run against external sites (no local server needed)
 - Includes proper browser settings for both local and CI environments
 - Screenshots and videos on failure for debugging
@@ -71,33 +75,16 @@ bazel test //:e2e_test --test_output=all --test_env=CI=false
 ## Test Examples
 
 ### google.spec.ts
+
 - Tests basic Google homepage functionality
 - Performs search operations
 - Demonstrates handling of dynamic content and cookies
 
-### simple.spec.ts  
+### simple.spec.ts
+
 - Basic assertion tests to verify the testing framework works
 - Async operation testing
 - String manipulation tests
-
-## Integration with Your Project
-
-To integrate this setup into your existing Bazel workspace:
-
-1. **Copy the configuration files**: Copy `BUILD.bazel`, `playwright.config.ts`, and `tsconfig.json`
-2. **Update your WORKSPACE.bazel**: Add the `rules_javascript` dependency if not already present
-3. **Add npm dependencies**: Add the Playwright dependencies to your root `package.json`
-4. **Create test files**: Add your test files following the same structure
-
-## Differences from Internal Setup
-
-This demo differs from the internal redo/ setup in several ways:
-
-1. **Public Repository**: Uses the public `rules_javascript` instead of `@better_rules_javascript`
-2. **Simplified Dependencies**: No internal service dependencies
-3. **External Test Targets**: Tests run against google.com instead of internal applications
-4. **Minimal Configuration**: Stripped down to essential configuration only
-5. **Standalone Structure**: Self-contained without complex internal dependency chains
 
 ## Troubleshooting
 
@@ -118,7 +105,7 @@ This demo differs from the internal redo/ setup in several ways:
 This demo can be extended with:
 
 - More complex page object patterns
-- API testing alongside UI tests  
+- API testing alongside UI tests
 - Visual regression testing
 - Performance testing
 - Custom test utilities and helpers
@@ -132,12 +119,3 @@ This demo can be extended with:
 - **typescript**: TypeScript compiler
 
 All dependencies are automatically managed by Bazel's npm integration.
-
-## Repository Structure
-
-This demo is part of a larger repository that includes:
-- `redo/`: Internal workspace with comprehensive Bazel setup
-- `rules_javascript/`: Custom JavaScript/TypeScript rules for Bazel
-- `playwright-bazel-demo/`: This standalone demo (you are here)
-
-The internal `redo/playwright-bazel-demo/` contains the source version of this demo integrated with the full workspace dependencies.
