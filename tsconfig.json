@@ -18,15 +18,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmitOnError": false,
-    "incremental": true
+    "incremental": true,
+    "types": ["node", "@playwright/test"]
   },
-  "include": [
-    "tests/**/*",
-    "playwright.config.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "bazel-*"
-  ]
+  "include": ["tests/**/*", "playwright.config.ts"],
+  "exclude": ["node_modules", "dist", "bazel-*"]
 }
