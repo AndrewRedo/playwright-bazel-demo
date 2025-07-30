@@ -1,0 +1,12 @@
+# Disable bzlmod to use WORKSPACE file
+common --noenable_bzlmod
+common --enable_workspace
+
+# Better test output
+test --test_output=errors
+
+# Cache settings
+build --disk_cache=~/.cache/bazel
+
+# Performance
+build --jobs=auto

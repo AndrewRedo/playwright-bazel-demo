@@ -1,0 +1,7 @@
+module(
+    name = "playwright_bazel_demo",
+    version = "1.0.0",
+)
+
+# This is primarily a WORKSPACE-based setup
+# MODULE.bazel is included for future bzlmod compatibility

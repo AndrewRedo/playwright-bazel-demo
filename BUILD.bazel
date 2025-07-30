@@ -1,0 +1,62 @@
+load("@rules_javascript//commonjs:rules.bzl", "cjs_root")
+load("@rules_javascript//javascript:rules.bzl", "js_library")
+load("@rules_javascript//playwright:rules.bzl", "playwright_test")
+load("@rules_javascript//typescript:rules.bzl", "ts_library")
+
+package(default_visibility = ["//visibility:public"])
+
+# CommonJS root
+cjs_root(
+    name = "root",
+    package_name = "playwright-bazel-demo",
+    descriptors = ["package.json"],
+)
+
+# TypeScript configuration
+js_library(
+    name = "tsconfig",
+    srcs = ["tsconfig.json"],
+    root = ":root",
+)
+
+# Compile TypeScript test files
+ts_library(
+    name = "test_lib",
+    srcs = glob(["tests/**/*.ts"]),
+    compile_deps = [
+        "@better_rules_javascript_npm//@types/node:lib",
+        "@better_rules_javascript_npm//@playwright/test:lib",
+    ],
+    compiler = "@rules_javascript//typescript:tsc",
+    config = "tsconfig.json",
+    config_dep = ":tsconfig",
+    module = "commonjs",
+    root = ":root",
+)
+
+# Playwright configuration
+js_library(
+    name = "playwright_config",
+    srcs = ["playwright.config.ts"],
+    root = ":root",
+    deps = [":test_lib"],
+)
+
+# Playwright test target
+playwright_test(
+    name = "e2e_test",
+    size = "large",
+    timeout = "moderate",
+    config = "playwright.config.ts",
+    config_dep = ":playwright_config",
+    dep = ":test_lib",
+    playwright = "@better_rules_javascript_npm//playwright:lib",
+    extra_deps = [
+        "@better_rules_javascript_npm//@playwright/test:lib",
+        "@better_rules_javascript_npm//playwright:lib",
+    ],
+    tags = [
+        "playwright",
+        "e2e",
+    ],
+)
